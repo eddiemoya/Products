@@ -1,4 +1,18 @@
 <?php
+/*
+ * Args:
+ * 
+ * array('api'		=> 'search | detail', --required
+ * 		 'type' 	=> 'keyword | vertical | category | detail' , --required
+ * 		 'term' 	=> '<search term>', --required
+ * 						--for category:
+ * 						array('vertical'	=> <vertical>,
+ * 							  'category'	=> <category>,
+ * 							  'sub_category' => <subcategory> -- OPTIONAL)
+ * 
+ * 		 'page' 	=> 1, --optional defaults to 1 if not defined
+ * 		 'per_page' => 25, --optional default to 25 if not defined) 		 
+ */
 
 class Products_Api_Request {
 
@@ -70,12 +84,15 @@ class Products_Api_Request {
 			throw new Exception('You must include a type attribute (category | keyword | vertical) in the args you pass.');
 		
 		if(! isset($args['term']))
-			throw new Exception('You must include a term attribute in the args array.');
-			
-		if(isset($args['page']) && ! isset($args['per_page'])) 
-			throw new Exception('If you include the page argument you must also include the per_page argument');
-			
-		if($args['type'] == 'category' && (! is_array($args['term']) || ! array_key_exists(array('vertical', 'category'), $args['term'])))
-			throw new Exception('Incorrect term value for category request. Must be an array containing a category and vertical element.');
+				throw new Exception('You must include a term attribute in the args array.');
+				
+	    if($args['api'] == 'search') {
+	    	
+			if(isset($args['page']) && ! isset($args['per_page'])) 
+				throw new Exception('If you include the page argument you must also include the per_page argument');
+				
+			if($args['type'] == 'category' && (! is_array($args['term']) || ! array_key_exists(array('vertical', 'category'), $args['term'])))
+				throw new Exception('Incorrect term value for category request. Must be an array containing a category and vertical element.');
+	    }
 	}
 }
