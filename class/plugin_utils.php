@@ -15,7 +15,26 @@ class Plugin_Utils {
 		} else {
 			
 			//Get all sub-dirs in class root dir
-			$dirs = 
+			$dirs = scandir(SHC_PRODUCTS_CLASS);
+			
+				if($dirs) {
+					
+					$exclude = array('...', '..', '.');
+					
+					foreach($dirs as $dir) {
+						
+						if(is_dir($class_dir . $dir) && ! in_array($dir, $exclude)) {
+							
+							if(is_file($class_dir . $dir . '/' . $file)) {
+								
+								require $class_dir . $dir . '/' . $file;
+								return;
+							}
+						}
+						
+						if(is_file())
+					}
+				}
 			
 		}
 	}
