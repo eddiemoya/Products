@@ -80,14 +80,14 @@ class Products_Api_Request {
 		if(! isset($args['api']) || ! in_array($args['api'], $this->_allowed_args['api'])) 
 			throw new Exception('You must include an api attribute in args [search | detail]');
 		
-		if(! isset($args['type']) || ! in_array($args['type'], $this->_allowed_args['type'])) 
-			throw new Exception('You must include a type attribute (category | keyword | vertical) in the args you pass.');
-		
 		if(! isset($args['term']))
 				throw new Exception('You must include a term attribute in the args array.');
 				
 	    if($args['api'] == 'search') {
 	    	
+	    	if(! isset($args['type']) || ! in_array($args['type'], $this->_allowed_args['type'])) 
+				throw new Exception('You must include a type attribute (category | keyword | vertical) in the args you pass.');
+				
 			if(isset($args['page']) && ! isset($args['per_page'])) 
 				throw new Exception('If you include the page argument you must also include the per_page argument');
 				
