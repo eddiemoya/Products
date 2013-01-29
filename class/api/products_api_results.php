@@ -79,22 +79,16 @@ class Products_Api_Results {
 		
 		$this->_raw_response = $obj->response();
 		
+		$this->success = $this->_is_success($obj);
+		
 		$this->num_pages = $obj->num_pages();
 		
 		$this->num_products = $obj->num_products();
 		
 		$this->page = $obj->page();
 		
-		$this->_set_properties();
-		
-		if($this->_is_success($obj)) {
-			
-			$this->success = true;
-			
-		} else {
-			
-			$this->success = false;
-		}
+		if($this->success)
+			$this->_set_properties();
 		
 	}
 	
@@ -104,12 +98,10 @@ class Products_Api_Results {
 			return false;
 			
 		if($this->api_data_type == 'search')
+			return isset($this->_raw_response->mercadoresult->products);
 		
-		//Figure out if we have results
-		
-		if($this->api_data_type == 'detail')
-		
-		//Same
+		if($this->api_data_type == 'detail') 
+			return ($this->_raw_response->productdetail->statusdata['responsecode'] == 0) ? true : false;
 	}
 	
 	/**

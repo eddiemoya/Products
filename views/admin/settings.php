@@ -1,5 +1,5 @@
 <div>
-	<h2>SHC SSO-Profile Plugin Settings</h2>
+	<h2>SK Products Plugin Settings</h2>
 	
 	<form action="options.php" method="post">
 	<?php settings_fields($settings_field); ?>
