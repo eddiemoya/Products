@@ -10,6 +10,10 @@ Author: Eddie "the Moyan" Moya & Dan Crimmins
  define('SHC_PRODUCTS_PATH', WP_PLUGIN_DIR . '/products/');
  define('SHC_PRODUCTS_CLASS', SHC_PRODUCTS_PATH . 'class/');
  define('SHC_PRODUCTS_FUNCTION', SHC_PRODUCTS_PATH . 'function/');
+ define('SHC_PRODUCTS_VIEWS', SHC_PRODUCTS_PATH . 'views/');
+ 
+ //Options prefix
+ define('SHC_PRODUCTS_PREFIX', 'sk_products_');
  
  
  //Include Product_Utils class - contains class autoloader

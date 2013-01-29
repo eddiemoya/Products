@@ -87,6 +87,29 @@ class Products_Api_Results {
 		
 		$this->_set_properties();
 		
+		if($this->_is_success($obj)) {
+			
+			$this->success = true;
+			
+		} else {
+			
+			$this->success = false;
+		}
+		
+	}
+	
+	protected function _is_success($obj) {
+		
+		if(! $obj->success)
+			return false;
+			
+		if($this->api_data_type == 'search')
+		
+		//Figure out if we have results
+		
+		if($this->api_data_type == 'detail')
+		
+		//Same
 	}
 	
 	/**

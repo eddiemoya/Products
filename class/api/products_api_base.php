@@ -54,6 +54,12 @@ class Products_Api_Base {
 	protected $_http_code;
 	
 	/**
+	 * _success - Indicates if a valid response was received from api.
+	 * @var bool
+	 */
+	public $success = false;
+	
+	/**
 	 * _content_type - specify the content type you want the API results in (xml or json)
 	 * @var string
 	 */
@@ -74,21 +80,14 @@ class Products_Api_Base {
 	
 	public function __construct() {
 		
-		//get plugin options, set properties, and paramseveral 
-		//$options = get_option('SHC_Products_Plugin');
-		
+		//get plugin options
+		$options = Plugin_Utils::options();
 		
 		$this->api_version = 'v2';
-		/*$this->api_key = $options['api_key'];
-		$this->api_appid = $options['api_appid'];
-		$this->api_authid = $options['api_authid'];
-		$this->api_store = ucfirst(strtolower($options['api_store']));*/
-		
-		/* For Testing*/
-		$this->api_key = '06749c96f1e1bfadfeca4a02b4120253';
+		$this->api_key = (isset($options['api_key'])) ? $options['api_key'] : '06749c96f1e1bfadfeca4a02b4120253';
 		$this->api_appid = 'FitStudio';
 		$this->api_authid = 'nmktplc303B1614B51F9FE5340E87FD1A1CEB3C06222010';
-		$this->api_store = 'Sears';
+		$this->api_store = (isset($options['store'])) ? $options['store'] : 'Sears';
 		
 		
 		$this->_map_options();
@@ -248,6 +247,10 @@ class Products_Api_Base {
         
         // Get the response information
         $this->_http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        
+        //Check for an HTTP 200
+        if($this->_http_code == '200')
+        	$this->success = true;
         
 
         if ($body === FALSE)

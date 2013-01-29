@@ -68,6 +68,12 @@ class Products_Api_Request {
 	
 	public function detail() {
 		
+		$request = Products_Api_Base::factory('detail')
+									->detail($this->_args['term'])
+									->load();
+									
+		$this->_obj = new Products_Api_Results($request);
+		
 	}
 	
 	public function response() {
