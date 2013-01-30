@@ -72,7 +72,7 @@ class Products_Api_Search extends Products_Api_Base implements Products_Api_Type
 	
 	public function num_pages() {
 		
-		return (isset($this->_results_per_request) && isset($this->_response->mercadoresult->productcount)) ? ceil(($this->_response->mercadoresult->productcount / $this->_results_per_request)) : 1;
+		return (isset($this->_results_per_request) && isset($this->_response->mercadoresult->productcount)) ? (int) ceil(($this->_response->mercadoresult->productcount / $this->_results_per_request)) : 1;
 	}
 	
 	public function page() {
