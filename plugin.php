@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Sears Products Plugin
+Plugin Name: Sears/Kmart Products Plugin
 Description: Provides functionality to import product data from Sears Product API and use products within WP.
 Version: 1.0
 Author: Eddie "the Moyan" Moya & Dan Crimmins
@@ -12,7 +12,8 @@ Author: Eddie "the Moyan" Moya & Dan Crimmins
  define('SHC_PRODUCTS_FUNCTION', SHC_PRODUCTS_PATH . 'function/');
  define('SHC_PRODUCTS_VIEWS', SHC_PRODUCTS_PATH . 'views/');
  
- //Options prefix
+ //Define any misc global data
+ define('SHC_PRODUCTS_POSTTYPE', 'product');
  define('SHC_PRODUCTS_PREFIX', 'sk_products_');
  
  
@@ -20,8 +21,12 @@ Author: Eddie "the Moyan" Moya & Dan Crimmins
  require_once(SHC_PRODUCTS_CLASS . 'plugin_utils.php');
  
  
- //Declare autoload function
+ //Register autoload function
  spl_autoload_register(array('Plugin_Utils', 'autoload'));
+ 
+ 
+ //Initialize classes with hooks
+ Plugin_Utils::init();
  
  
  

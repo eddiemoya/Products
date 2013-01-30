@@ -14,14 +14,10 @@ class Products_Admin_Settings {
 		$this->prefix = SHC_PRODUCTS_PREFIX;
 		$this->settings_field = SHC_PRODUCTS_PREFIX . "settings";
 		$this->options = Plugin_Utils::options();
-	}
-	
-	public static function init() {
 		
-		$this->__construct();
+		add_action('admin_menu', array(&$this, 'menu'));
+        add_action('admin_init', array(&$this, 'register_settings'));
 		
-		add_action('admin_menu', array(__CLASS__, 'menu'));
-        add_action('admin_init', array(__CLASS__, 'register_settings'));
 	}
 	
 	public function menu() {

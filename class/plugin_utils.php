@@ -2,9 +2,26 @@
 
 class Plugin_Utils {
 	
+	/**
+	 * $_option_name - the plugin options name
+	 * @var string
+	 */
 	protected $_option_name;
 	
+	/** 
+	 * $_classes - Array of classes to load on init 
+	 * @var array
+	 * @see init()
+	 */
+	protected $_classes = array('settings_admin'	=> 'Products_Admin_Settings',
+								);
 	
+	/**
+	 * _option_name() - Sets $_option_name
+	 * 
+	 * @param void
+	 * @return void
+	 */
 	protected function _option_name() {
 		
 		$this->_option_name = SHC_PRODUCTS_PREFIX . 'settings';
@@ -17,6 +34,7 @@ class Plugin_Utils {
 	 * from root class directory.
 	 * 
 	 * @param string $class
+	 * @return void
 	 */
 	public static function autoload($class) {
 		
@@ -56,9 +74,11 @@ class Plugin_Utils {
 	}
 	
 	/**
-	 * Enter description here ...
-	 * @param unknown_type $name
-	 * @param unknown_type $value
+	 * options() - Sets and gets plugin options.
+	 * 
+	 * @param string $name
+	 * @param mixed $value
+	 * @return mixed - [array | string | NULL] 
 	 */
 	public static function options($name = null, $value = null) {
 		
@@ -89,6 +109,13 @@ class Plugin_Utils {
 		return null;
 	}
 	
+	/**
+	 * view() - Passes args, includes and echoes view
+	 * 
+	 * @param string $view - path the view file in view dir
+	 * @param array $args - assoc. array of vars that view will use.
+	 * @return void
+	 */
 	public static function view($view, array $args = null) {
 		
 		$file = SHC_PRODUCTS_VIEWS . $view . '.php';
@@ -105,6 +132,20 @@ class Plugin_Utils {
 		
 		echo ob_get_clean();
 		
+	}
+	
+	/**
+	 * init() - Used to instantiate objects of classes with init hooks (ie. Admin stuff)
+	 * 
+	 * @param void
+	 * @return void
+	 */
+	public static function init() {
+		
+		foreach($this->_classes as $var=>$class) {
+			
+			$$var = new $class();
+		}
 	}
 	
 	
