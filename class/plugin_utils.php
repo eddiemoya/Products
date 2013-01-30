@@ -6,14 +6,14 @@ class Plugin_Utils {
 	 * $_option_name - the plugin options name
 	 * @var string
 	 */
-	protected $_option_name;
+	public static $_option_name;
 	
 	/** 
 	 * $_classes - Array of classes to load on init 
 	 * @var array
 	 * @see init()
 	 */
-	protected $_classes = array('settings_admin'	=> 'Products_Admin_Settings',
+	public static $_classes = array('settings_admin'	=> 'Products_Admin_Settings',
 								);
 	
 	/**
@@ -22,9 +22,9 @@ class Plugin_Utils {
 	 * @param void
 	 * @return void
 	 */
-	protected function _option_name() {
+	public static function _option_name() {
 		
-		$this->_option_name = SHC_PRODUCTS_PREFIX . 'settings';
+		self::$_option_name = SHC_PRODUCTS_PREFIX . 'settings';
 	}
 	
 	/**
@@ -83,10 +83,10 @@ class Plugin_Utils {
 	public static function options($name = null, $value = null) {
 		
 		//Set option prefix property
-		$this->_option_name();
+		self::_option_name();
 		
 		//Get plugin options
-		$options = get_option($this->_option_name);
+		$options = get_option(self::$_option_name);
 		
 		//Return entire settings array
 		if($name === null && $value === null && $options) {
@@ -120,6 +120,7 @@ class Plugin_Utils {
 		
 		$file = SHC_PRODUCTS_VIEWS . $view . '.php';
 		
+		
 		if($args !== null)
 			extract($args, EXTR_SKIP);
 			
@@ -142,7 +143,7 @@ class Plugin_Utils {
 	 */
 	public static function init() {
 		
-		foreach($this->_classes as $var=>$class) {
+		foreach(self::$_classes as $var=>$class) {
 			
 			$$var = new $class();
 		}

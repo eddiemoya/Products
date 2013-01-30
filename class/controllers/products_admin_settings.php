@@ -13,7 +13,8 @@ class Products_Admin_Settings {
 		
 		$this->prefix = SHC_PRODUCTS_PREFIX;
 		$this->settings_field = SHC_PRODUCTS_PREFIX . "settings";
-		$this->options = Plugin_Utils::options();
+		$this->options = array('api_key' => '06749c96f1e1bfadfeca4a02b4120253',
+								'store'	=> 'Sears');//Plugin_Utils::options();
 		
 		add_action('admin_menu', array(&$this, 'menu'));
         add_action('admin_init', array(&$this, 'register_settings'));
@@ -22,21 +23,21 @@ class Products_Admin_Settings {
 	
 	public function menu() {
 		
-		add_options_page('SK Products Settings', 'Products Settings', 'manage_options', 'skproducts-settings', array(__CLASS__, 'settings_page'));
+		add_options_page('SK Products Settings', 'Products Settings', 'manage_options', 'skproducts-settings', array(&$this, 'settings_page'));
 	}
 	
 	public function register_settings() {
 		
 		register_setting($this->settings_field, $this->settings_field);
 		
-		add_settings_section(SHC_PRODUCTS_PREFIX . 'api_section', __('Products API Settings'), array(__CLASS__, 'api_section'), 'skproducts-settings');
-        add_settings_field('product_api_key', __('Product API Key'), array(__CLASS__, 'api_key'), 'skproducts-settings', SHCSSO_OPTION_PREFIX . 'api_section');
-		add_settings_field('product_store', __('Store'), array(__CLASS__, 'store'), 'skproducts-settings', SHCSSO_OPTION_PREFIX . 'store');
+		add_settings_section(SHC_PRODUCTS_PREFIX . 'api_section', __('Products API Settings'), array(&$this, 'api_section'), 'skproducts-settings');
+        add_settings_field('api_key', __('Product API Key'), array(&$this, 'api_key'), 'skproducts-settings', SHC_PRODUCTS_PREFIX . 'api_section');
+		add_settings_field('store', __('Store'), array(&$this, 'store'), 'skproducts-settings', SHC_PRODUCTS_PREFIX . 'api_section');
 	}
 	
 	public function api_section() {
 		
-		 echo '<p>' . __('Product API Settings.') . '</p>';
+		 echo '<p>' . __('Products API parameters.') . '</p>';
 	}
 	
 	public function api_key() {

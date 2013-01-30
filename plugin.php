@@ -28,7 +28,3 @@ Author: Eddie "the Moyan" Moya & Dan Crimmins
  //Initialize classes with hooks
  Plugin_Utils::init();
  
- 
- 
-
-

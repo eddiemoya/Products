@@ -26,6 +26,9 @@ class Product_Importer {
 												->response();
 
 				//Check that we got a valid response
+				if($product->success){
+					
+				}
 				
 				//if valid response, insert product post, meta data, and taxonomy
 			}

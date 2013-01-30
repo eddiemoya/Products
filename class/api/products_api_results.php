@@ -101,7 +101,7 @@ class Products_Api_Results {
 			return isset($this->_raw_response->mercadoresult->products);
 		
 		if($this->api_data_type == 'detail') 
-			return ($this->_raw_response->productdetail->statusdata['responsecode'] == 0) ? true : false;
+			return ($this->_raw_response->productdetail->statusdata->responsecode == 0) ? true : false;
 	}
 	
 	/**
