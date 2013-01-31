@@ -1,0 +1,1 @@
+<input type="checkbox" name="<?php echo $name;?>" id="<?php echo $id?>" <?php if($checked) echo ' selected="selected"';?> />
