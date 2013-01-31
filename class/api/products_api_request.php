@@ -97,7 +97,7 @@ class Products_Api_Request {
 			if(isset($args['page']) && ! isset($args['per_page'])) 
 				throw new Exception('If you include the page argument you must also include the per_page argument');
 				
-			if($args['type'] == 'category' && (! is_array($args['term']) || ! array_key_exists(array('vertical', 'category'), $args['term'])))
+			if($args['type'] == 'category' && (! is_array($args['term']) || ! array_key_exists('vertical', $args['term']) || ! array_key_exists('category', $args['term'])))
 				throw new Exception('Incorrect term value for category request. Must be an array containing a category and vertical element.');
 	    }
 	}

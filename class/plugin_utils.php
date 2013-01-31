@@ -110,13 +110,13 @@ class Plugin_Utils {
 	}
 	
 	/**
-	 * view() - Passes args, includes and echoes view
+	 * view() - Passes args, includes and echoes/returns view
 	 * 
 	 * @param string $view - path the view file in view dir
 	 * @param array $args - assoc. array of vars that view will use.
 	 * @return void
 	 */
-	public static function view($view, array $args = null) {
+	public static function view($view, array $args = null, $return = false) {
 		
 		$file = SHC_PRODUCTS_VIEWS . $view . '.php';
 		
@@ -131,7 +131,14 @@ class Plugin_Utils {
 			include $file;
 		}
 		
-		echo ob_get_clean();
+		if(! $return) {
+			
+			echo ob_get_clean();
+			
+		} else {
+			
+			return ob_get_clean();
+		}
 		
 	}
 	
