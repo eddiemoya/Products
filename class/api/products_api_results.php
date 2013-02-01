@@ -98,7 +98,8 @@ class Products_Api_Results {
 			return false;
 			
 		if($this->api_data_type == 'search')
-			return isset($this->_raw_response->mercadoresult->products);
+			return (isset($this->_raw_response->mercadoresult->products) || 
+					isset($this->_raw_response->mercadoresult->navgroups->navgroup)) ? true : false;
 		
 		if($this->api_data_type == 'detail') 
 			return ($this->_raw_response->productdetail->statusdata->responsecode == 0) ? true : false;
@@ -161,7 +162,7 @@ class Products_Api_Results {
 	/**
 	 * _products()
 	 * 
-	 * Sets the $products property (used for search api only)
+	 * Sets the $products or $navigation property based in keyword or vertical|category (used for search api only)
 	 * 
 	 * @param void
 	 * @return void
@@ -169,8 +170,12 @@ class Products_Api_Results {
 	protected function _products() {
 		
 		if($this->api_data_type == 'search')
-			$this->products = $this->_raw_response->mercadoresult->products->product[1];
-			
+		
+			if(isset($this->_raw_response->mercadoresult->products->product[1]))
+				$this->products = $this->_raw_response->mercadoresult->products->product[1];
+				
+			if(isset($this->_raw_response->mercadoresult->navgroups->navgroup))
+				$this->navigation = $this->_raw_response->mercadoresult->navgroups->navgroup[1];	
 	}
 	
 	/**
