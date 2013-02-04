@@ -8,6 +8,13 @@ class Plugin_Utils {
 	 */
 	public static $_option_name;
 	
+	/**
+	 * $_option_defaults - default option values
+	 * @var array
+	 */
+	public static $_option_defaults = array('api_key'	=> '06749c96f1e1bfadfeca4a02b4120253',
+											'store'		=> 'Sears');
+	
 	/** 
 	 * $_classes - Array of classes to load on init 
 	 * @var array
@@ -166,6 +173,22 @@ class Plugin_Utils {
 		foreach(self::$_classes as $var=>$class) {
 			
 			$$var = new $class();
+		}
+	}
+	
+	public static function install() {
+		
+		foreach(self::$_option_defaults as $key=>$value) {
+			
+			update_option($key, $value);
+		}
+	}
+	
+	public static function uninstall() {
+		
+		foreach(self::$_option_defaults as $key=>$value) {
+			
+			delete_option($key);
 		}
 	}
 	

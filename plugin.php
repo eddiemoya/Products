@@ -24,6 +24,10 @@ Author: Eddie "the Moyan" Moya & Dan Crimmins
  //Register autoload function
  spl_autoload_register(array('Plugin_Utils', 'autoload'));
  
+ //Install / Uninstall
+ register_activation_hook(__FILE__, array('Plugin_Utils', 'install'));
+ register_deactivation_hook(__FILE__, array('Plugin_Utils', 'uninstall'));
+    
  
  //Initialize classes with hooks
  Plugin_Utils::init();
