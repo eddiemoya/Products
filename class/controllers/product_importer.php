@@ -3,7 +3,13 @@
 class Product_Importer {
 	
 	public $partnumbers;
-
+	
+	public $errors = array();
+	
+	public $msg = array();
+	
+	public $num_products_imported = 0;
+		
 	
 	public function __construct(array $partnumbers) {
 		
@@ -28,11 +34,34 @@ class Product_Importer {
 				//Check that we got a valid response
 				if($product->success){
 					
+					//Check if product already exists in WP, if not proceed
+					//If it exists log in errors
+					
+					//Insert product post, meta data, and taxonomy
+					
+					$this->num_products_imported++;
+					
+				} else {
+					
+					$this->_set_error($partnumber . ' was not imported - not found.');
 				}
 				
-				//if valid response, insert product post, meta data, and taxonomy
+				if(count($this->errors)) {
+					
+					$this->_set_msg('There were issues importing some of the products.');
+					
+				} else {
+					
+					$this->_set_msg('All products were imported successfully. ' . $this->num_products_imported . ' products imported');
+				}
 			}
+			
+		} else {
+			
+			$this->_set_message('Please select at least one product to import.');
 		}
+		
+		return $this;
 		
 	}
 	
@@ -40,5 +69,14 @@ class Product_Importer {
 		
 	}
 	
+	protected function _set_msg($text) {
+		
+		$this->msg[] = $text;
+	}
+	
+	protected function _set_error($error) {
+		
+		$this->errors[] = $error;
+	}
 	
 }

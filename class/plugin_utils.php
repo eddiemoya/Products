@@ -142,6 +142,19 @@ class Plugin_Utils {
 		
 	}
 	
+	public static function image($url, $attrs = false) {
+		
+		$defaults = array('width' 		=> 140,
+						  	'height'	=> 140,
+							'alt'		=> '');
+		if(! $attrs)
+			return "<img src='{$url}' height='{$defaults["height"]}' width='{$defaults["width"]}' alt='{$defaults["alt"]}' />";
+			
+			
+		return "<img src='{$url}' height='{$attrs["height"]}' width='{$attrs["width"]}' alt='{$attrs["alt"]}' />";
+		
+	}
+	
 	/**
 	 * init() - Used to instantiate objects of classes with init hooks (ie. Admin stuff)
 	 * 
