@@ -107,7 +107,7 @@ class Plugin_Utils {
 			return $options[$name];
 		}
 		
-		//Set plugin option
+		//Set plugin options
 		if($name === null && is_array($value)) {
 			
 			return update_option($this->_option_name, $value);
