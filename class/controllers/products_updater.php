@@ -199,11 +199,7 @@ class Products_Updater {
 	        		
 	        	}
 	        	
-	        	//Check to see if we find this product in API
-	        	$request = Products_Api_Request::factory(array('api' => 'detail',
-												 				'term' => '002VA50405301P'))
-				        						->response()
-				        						->success;
+	        	
 			}
 		
 		} else {
@@ -219,6 +215,29 @@ class Products_Updater {
 			
 		}
 		
+	}
+	
+	protected function sync($post) {
+		
+		
+		//Check to see if we find this product in API
+		$success = Products_Api_Request::factory(array('api' => 'detail',
+										 				'term' => $post->partnumber)) 
+		        						->response()
+		        						->success;
+		        						
+		 if($success) {
+		 	
+		 	//Get meta data and taxonomy info and update
+		 	
+		 	$this->log_update($post);
+		 	
+		 } else {
+		 	
+		 	//set this product to draft
+		 	
+		 	$this->log_delete($post);
+		 }
 	}
 	
   /**
