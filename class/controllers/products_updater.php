@@ -150,11 +150,6 @@ class Products_Updater {
 	protected $_profile_mode = false;
 	
 	
-	
-	
-	
-	
-	
 	public function __construct($force = false) {
 		
 		if($force)
@@ -166,14 +161,12 @@ class Products_Updater {
 		
 		//Get the options related to cron updater - email etc.
 		$this->_options_map();
-		
-		
 		$this->_log_dir_path = $this->_log_root_dir_path . $this->_log_dir;
 	}
 	
-	public static function factory() {
+	public static function factory($force = false) {
 		
-		return new Products_Updater;
+		return new Products_Updater($force);
 	}
 	
 	
@@ -189,30 +182,42 @@ class Products_Updater {
 	
 	public function update() {
 		
-		//Get posts - array of objs
-		$posts = null; 
-		
-		//Set threshold
-		$this->_set_threshold($posts);
-		
-		foreach($posts as $post) {
+		if($this->is_api_available()) {
 			
-			//If the number of 'deletes' equals threshold, fail job.
-        	if((! $this->_force_update) && ($this->_num_deleted >= $this->_fail_threshold_cnt) && (! $this->_profile_mode)) {
-        		
-        		$this->fail_job("\n\n WARNING! -- Maximum number of deletes reached ({$this->_fail_threshold_cnt}). Job aborted.");
-        		
-        	}
-        	
-        	//Check to see if we find this product in API
-        	Products_Api_Request::factory(array('api' => 'detail',
-											 	'term' => '002VA50405301P'))
-        						->response()
-        						->success;
+			//Get posts - array of objs
+			$posts = null; 
+			
+			//Set threshold
+			$this->_set_threshold($posts);
+			
+			foreach($posts as $post) {
+				
+				//If the number of 'deletes' equals threshold, fail job.
+	        	if((! $this->_force_update) && ($this->_num_deleted >= $this->_fail_threshold_cnt) && (! $this->_profile_mode)) {
+	        		
+	        		$this->fail_job("\n\n WARNING! -- Maximum number of deletes reached ({$this->_fail_threshold_cnt}). Job aborted.");
+	        		
+	        	}
+	        	
+	        	//Check to see if we find this product in API
+	        	$request = Products_Api_Request::factory(array('api' => 'detail',
+												 				'term' => '002VA50405301P'))
+				        						->response()
+				        						->success;
+			}
+		
+		} else {
+			
+			//Fail Job
+    		$this->fail_job('WARNING! -- API Server was NOT available. Job aborted.');
+    		
+    		$this->create_log();
+    		
+    		$this->rotate_logs();
+    		
+    		$this->mail_report();
+			
 		}
-		
-		
-		
 		
 	}
 	
@@ -424,12 +429,10 @@ class Products_Updater {
      */
     protected function is_api_available() { 
     	
-    	$search = Library_Sears_Api::factory('search')
-						            ->cache(FALSE)
-						            ->keyword('test')
-						            ->load();
-						            
-       return ($search->http_code == '200') ? true : false;
+    	return Products_Api_Request::factory(array('api' => 'detail',
+											 		'term' => '002VA50405301P'))
+    								->response()
+    								->success;
     }
     
     /**
