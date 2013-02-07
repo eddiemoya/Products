@@ -13,8 +13,7 @@ class Products_Admin_Settings {
 		
 		$this->prefix = SHC_PRODUCTS_PREFIX;
 		$this->settings_field = SHC_PRODUCTS_PREFIX . "settings";
-		$this->options = Plugin_Utils::options();//array('api_key' => '06749c96f1e1bfadfeca4a02b4120253',
-														//'store'	=> 'Sears');
+		$this->options = Plugin_Utils::options();
 		
 		add_action('admin_menu', array(&$this, 'menu'));
         add_action('admin_init', array(&$this, 'register_settings'));

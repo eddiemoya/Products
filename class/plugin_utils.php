@@ -104,15 +104,23 @@ class Plugin_Utils {
 		}
 		
 		//Get a specific element from options
-		if(($name !== null && $value === null) && isset($options[$name]) ) {
+		if((($name !== null && ! is_array($name)) && $value === null) && isset($options[$name]) ) {
 			
 			return $options[$name];
 		}
 		
-		//Set plugin options
-		if($name === null && is_array($value)) {
+		//Set plugin options - all
+		if(($name !== null && is_array($name)) && $value === null) {
 			
 			return update_option($this->_option_name, $value);
+		}
+		
+		//Set, update value of one element of options array
+		if($name !== null && $value !== null) {
+			
+			$options[$name] = $value;
+			
+			return update_option($this->_option_name, $options);
 		}
 		
 		return null;
@@ -184,11 +192,8 @@ class Plugin_Utils {
 	}
 	
 	public static function uninstall() {
-		
-		foreach(self::$_option_defaults as $key=>$value) {
 			
-			delete_option($key);
-		}
+		delete_option(SHC_PRODUCTS_PREFIX . 'settings');
 	}
 	
 	
