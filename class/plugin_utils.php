@@ -22,7 +22,7 @@ class Plugin_Utils {
 	 * @var array
 	 * @see init()
 	 */
-	public static $_classes = array('settings_admin'	=> 'Products_Admin_Settings',
+	public static $_classes = array('seforeach(self::$_option_defaults as $key=>$value) {ttings_admin'	=> 'Products_Admin_Settings',
 								);
 	
 	/**
@@ -179,11 +179,8 @@ class Plugin_Utils {
 	}
 	
 	public static function install() {
-		
-		foreach(self::$_option_defaults as $key=>$value) {
 			
-			update_option($key, $value);
-		}
+		update_option(SHC_PRODUCTS_PREFIX . 'settings', self::$_option_defaults);
 	}
 	
 	public static function uninstall() {
