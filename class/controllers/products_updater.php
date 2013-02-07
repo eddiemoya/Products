@@ -199,6 +199,7 @@ class Products_Updater {
 	        		
 	        	}
 	        	
+	        	$this->_sync($post);
 	        	
 			}
 		
@@ -217,7 +218,7 @@ class Products_Updater {
 		
 	}
 	
-	protected function sync($post) {
+	protected function _sync($post) {
 		
 		
 		//Check to see if we find this product in API

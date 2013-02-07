@@ -12,8 +12,10 @@ class Plugin_Utils {
 	 * $_option_defaults - default option values
 	 * @var array
 	 */
-	public static $_option_defaults = array('api_key'	=> '06749c96f1e1bfadfeca4a02b4120253',
-											'store'		=> 'Sears');
+	public static $_option_defaults = array('api_key'					=> '06749c96f1e1bfadfeca4a02b4120253',
+											'store'						=> 'Sears',
+											'updater_log_root'			=> '/appl/wordpress/log/',
+											'updater_email_recipient'	=> 'phpteam@searshc.com');
 	
 	/** 
 	 * $_classes - Array of classes to load on init 
