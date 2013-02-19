@@ -19,6 +19,7 @@ Author: Eddie "the Moyan" Moya & Dan Crimmins
  
  //Include Product_Utils class - contains class autoloader
  require_once(SHC_PRODUCTS_CLASS . 'plugin_utils.php');
+ require_once(SHC_PRODUCTS_FUNCTION . 'functions.php');
  
  
  //Register autoload function

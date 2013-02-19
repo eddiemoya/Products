@@ -46,14 +46,14 @@ class Product_Assets {
 			
 			if($type == 'script') {
 				
-				if($hook && $hook == $opts['page'])
+				//if($hook && $hook == $opts['page'])
 					wp_register_script($handle, $this->_scripts_dir . $opts['file'], $opts['dep'], $opts['ver']);
 					wp_enqueue_script($handle);
 			}
 			
 			if($type == 'style') {
 				
-				if($hook && $hook == $opts['page'])
+				//if($hook && $hook == $opts['page'])
 					wp_register_style($handle, $this->_styles_dir . $opts['file'], $opts['dep'], $opts['ver']);
 					wp_enqueue_style($handle);
 			}
