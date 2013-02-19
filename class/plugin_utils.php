@@ -22,8 +22,10 @@ class Plugin_Utils {
 	 * @var array
 	 * @see init()
 	 */
-	public static $_classes = array('seforeach(self::$_option_defaults as $key=>$value) {ttings_admin'	=> 'Products_Admin_Settings',
-								);
+	public static $_classes = array('settings_admin'			=> 'Products_Admin_Settings',
+									'product_register'			=> 'Product_Post_Type',
+									'product_importer'			=> 'Products_Admin_Import',
+									'product_enqueue_assets'	=> 'Product_Assets');
 	
 	/**
 	 * _option_name() - Sets $_option_name
@@ -189,6 +191,8 @@ class Plugin_Utils {
 	public static function install() {
 			
 		update_option(SHC_PRODUCTS_PREFIX . 'settings', self::$_option_defaults);
+		
+		flush_rewrite_rules();
 	}
 	
 	public static function uninstall() {
