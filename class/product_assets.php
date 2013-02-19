@@ -14,9 +14,9 @@ class Product_Assets {
 																'ver'		=> '1.0',
 																'page'		=> null),
 										'admin'			=> array('file'		=> 'admin.js',
-																'dep'	=>	array('jquery-tools'),
-																'ver'	=> '1.0',
-																'page'	=> 'edit.php'));
+																'dep'		=>	array('jquery-tools'),
+																'ver'		=> '1.0',
+																'page'		=> 'edit.php'));
 	
 	
 	protected $_admin_styles = array('product-admin'	=> array('file'	=> 'admin_style.css',
@@ -66,7 +66,7 @@ class Product_Assets {
 		$this->_load('_admin_scripts', 'script');
 		
 		//Admin styles
-		//$this->_load('_admin_styles', 'style');
+		$this->_load('_admin_styles', 'style');
 	}
 	
 	public function enqueue() {
