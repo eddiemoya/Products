@@ -8,6 +8,7 @@ class Product_Assets {
 	protected $_scripts;
 	
 	protected $_styles;
+	 
 	
 	protected $_admin_scripts = array('jquery-tools' 	=> array('file'		=> 'jquery.tools.min.js',
 																'dep'		=> array(),			
@@ -34,9 +35,8 @@ class Product_Assets {
 	
 	protected function _set_paths() {
 		
-		$this->_scripts_dir = SHC_PRODUCTS_PATH . 'assets/js/';
-		$this->_styles_dir = SHC_PRODUCTS_PATH . 'assets/css/';
-		
+		$this->_scripts_dir = plugins_url('assets/js/', dirname(__FILE__));
+		$this->_styles_dir = plugins_url('assets/css/', dirname(__FILE__));	
 	}
 	
 	
@@ -67,6 +67,11 @@ class Product_Assets {
 		
 		//Admin styles
 		$this->_load('_admin_styles', 'style');
+	}
+	
+	protected function _add_js_vars() {
+		
+		
 	}
 	
 	public function enqueue() {
