@@ -67,7 +67,7 @@ class Products_Api_Search extends Products_Api_Base implements Products_Api_Type
 	
 	public function num_products() {
 		
-		return (isset($this->_response->mercadoresult->productcount)) ? (int) $this->_response->mercadoresult->productcount : 1;
+		return (isset($this->_response->mercadoresult->productcount)) ? (int) $this->_response->mercadoresult->productcount : 0;
 	}
 	
 	public function num_pages() {

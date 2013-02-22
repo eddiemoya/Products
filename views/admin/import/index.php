@@ -1,6 +1,6 @@
 <div class="wrap shcp_wrap">
   <h2>Import Products</h2> 
-  <p>To see products select a search method, enter the search terms and click the Search button.</p>
+
   <form action="" id="keyword_form" method="post">
     <div class="shcp_form_labels">
       <label for="search_terms">Keyword Search: </label>

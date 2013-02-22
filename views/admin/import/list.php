@@ -18,11 +18,11 @@
 <div class="product_pagination">
   <div class='products_found'><span class='product_count'><?php echo $product_count; ?></span> products found</div>
 <?php if($prev_page):?>
-	 <a class="product_prev_page_link" href="#"  data-page-number="<?php echo $prev_page;?>">Previous &lt;&lt;</a>
+	 <a class="product_prev_page_link" href="#"  data-page-number="<?php echo $prev_page;?>">&lt;&lt; Previous</a>
 <?php endif;?>
 <?php for($i = $start_index; $i <= $end_index; $i++): ?>
   <?php if($i == $current_page): ?>
-      <span class='current_page'><?php echo $i;?></span>_
+      <span class='current_page'><?php echo $i;?></span>
     <?php else: ?>
       <a class="product_page_link" href="#"  data-page-number="<?php echo $i;?>"><?php echo $i;?></a>
 <?php   endif;

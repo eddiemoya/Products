@@ -8,13 +8,14 @@ class Product_Assets {
 	protected $_scripts;
 	
 	protected $_styles;
+	
 	 
 	
 	protected $_admin_scripts = array('jquery-tools' 	=> array('file'		=> 'jquery.tools.min.js',
 																'dep'		=> array(),			
 																'ver'		=> '1.0',
 																'page'		=> null),
-										'admin'			=> array('file'		=> 'admin.js',
+										'products_admin' => array('file'	=> 'admin.js',
 																'dep'		=>	array('jquery-tools'),
 																'ver'		=> '1.0',
 																'page'		=> 'edit.php'));
@@ -30,7 +31,6 @@ class Product_Assets {
 		$this->_set_paths();
 		
 		add_action('admin_enqueue_scripts', array(&$this, 'admin_enqueue'));
-		
 	}
 	
 	protected function _set_paths() {
@@ -65,15 +65,13 @@ class Product_Assets {
 		//Admin scripts
 		$this->_load('_admin_scripts', 'script');
 		
+		wp_localize_script('products_admin', 'shcp_ajax', array('ajaxurl' => admin_url('admin-ajax.php'), 'imageurl' => SHC_PRODUCTS_ASSETS_URL . 'images/'));
+		
 		//Admin styles
 		$this->_load('_admin_styles', 'style');
 	}
 	
-	protected function _add_js_vars() {
-		
-		
-	}
-	
+
 	public function enqueue() {
 		
 	}

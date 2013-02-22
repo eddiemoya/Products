@@ -35,16 +35,16 @@ jQuery(document).ready(function($) {
 function import_products(el, method, page_data) {
 
   //var product_count     = page_data != null ? page_data.attr('data-product-count') : 0;
-  var page_link_num     = page_data != null ? page_data.attr('data-page-number') : null;
-  var keyword_terms     = jQuery("#search_term").length != 0 ? jQuery("#search_term").val() : jQuery("#search_terms_keyword").val();
+  var page_link_num     = page_data !== null ? page_data.attr('data-page-number') : null;
+  var keyword_terms     = jQuery("#search_terms_keyword").length != 0 ? jQuery("#search_terms_keyword").val() : jQuery("#search_terms_keyword").val();
   var current_page		= jQuery("#page_number").length != 0 ? jQuery("#page_number").val() : 1;
   
     jQuery.post(
       shcp_ajax.ajaxurl,
       {
-        action        : "action_list",
+        action        : "product_list",
         search_terms  : keyword_terms,
-        page_number   : (page_link_num != null) ? page_link_num : current_page
+        page_number   : (page_link_num !== null) ? page_link_num : 1
       },
        function(response) {
         jQuery('#shcp_import_list').html(response);
@@ -76,18 +76,19 @@ function import_callback() {
 
     e.preventDefault();
     submit_form = jQuery('#keyword_form');
-    import_products(submit_form, method, jQuery(this));
+    import_products(submit_form, 'keyword', jQuery(this));
     
   });
 
 }
+
 
 function save_products() {
 
  var data;
  
  data = jQuery('#shcp_import_form').serialize();
- data += '&action=action_save';
+ data += '&action=product_import';
  
   jQuery.ajax({
     type: 'post',

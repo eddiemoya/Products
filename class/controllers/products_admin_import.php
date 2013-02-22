@@ -35,6 +35,7 @@ class Products_Admin_Import {
 														'per_page' => $this->num_per_page))
 										->response();
 		
+		
         $args = array('products'			=> ($results->success) ? $results->products : null,
         				'search_term'		=> $search_terms,
         				'product_count'		=> $results->num_products,

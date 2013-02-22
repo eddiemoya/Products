@@ -8,6 +8,7 @@ Author: Eddie "the Moyan" Moya & Dan Crimmins
 
  //Define plugin root, class, and function paths
  define('SHC_PRODUCTS_PATH', WP_PLUGIN_DIR . '/products/');
+ define('SHC_PRODUCTS_ASSETS_URL', plugins_url('assets/', __FILE__));
  define('SHC_PRODUCTS_CLASS', SHC_PRODUCTS_PATH . 'class/');
  define('SHC_PRODUCTS_FUNCTION', SHC_PRODUCTS_PATH . 'function/');
  define('SHC_PRODUCTS_VIEWS', SHC_PRODUCTS_PATH . 'views/');
