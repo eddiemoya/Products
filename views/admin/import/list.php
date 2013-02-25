@@ -28,7 +28,7 @@
 <?php   endif;
       endfor; ?>
 <?php if($next_page):?>
-	<a class="product_next_page_link" href="#"  data-page-number="<?php echo $prev_page;?>">Next &gt;&gt;</a>
+	<a class="product_next_page_link" href="#"  data-page-number="<?php echo $next_page;?>">Next &gt;&gt;</a>
 <?php endif;?>
 </div>
 
