@@ -60,7 +60,7 @@ class Products_Model {
 			
 			foreach($name as $key=>$value) {
 				
-				$this->{$property}[$name] = $value;
+				$this->{$property}[$key] = $value;
 			}
 		}
 		
