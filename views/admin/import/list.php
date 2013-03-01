@@ -1,8 +1,10 @@
 <div class="import-messages">
 <?php if($message):?>
-	<div class="import-message">
-		<span class="response-message"><?php echo $message;?></span>
-	</div>
+	<ul class="import-message">
+		<?php foreach($message as $text):?>
+			<li class="response-message"><?php echo $text;?></li>
+		<?php endforeach;?>
+	</ul>
 <?php endif;?>
 
 <?php if($errors):?>

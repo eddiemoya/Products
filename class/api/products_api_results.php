@@ -58,6 +58,8 @@ class Products_Api_Results {
 											'mainimageurl',
 											'saleprice',
 											'regularprice',
+											'rating',
+											'numreview',
 											'brandname',
 											'partnumber',
 											'descriptionname',
@@ -336,7 +338,7 @@ class Products_Api_Results {
 										->avals[1][0]
 										->aval[1];
 									
-			$product_attr_values[$attr] = $vals;
+			$product_attr_values[$attr] = $this->_sanitize_attr_values($vals);
 		}
 		
 		$this->product_attr_values = $product_attr_values;
@@ -346,8 +348,17 @@ class Products_Api_Results {
 	
 		if(is_array($vals)) {
 			
+			$new_values = array();
+			
+			foreach($vals as $value) {
+				
+				$new_values[] = str_replace('"', '', $value);
+			}
+			
+			return $new_values;
 		}
 		
+		return $vals;
 	}
 	
 	/**

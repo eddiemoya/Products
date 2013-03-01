@@ -25,9 +25,9 @@ class Product_Importer {
 	
 	public function import() {
 		
-		if(count($partnumbers)) {
+		if(count($this->partnumbers)) {
 			
-			foreach($partnumbers as $partnumber) {
+			foreach($this->partnumbers as $partnumber) {
 				
 				$product = Products_Api_Request::factory(array('api' => 'detail',
 																'term' => $partnumber))
@@ -41,9 +41,41 @@ class Product_Importer {
 					//Check if product already exists in WP, if not proceed
 					if(! $products_model->exists('partnumber', $partnumber))
 					
-						//Insert product post, meta data, and taxonomy
-						
-						$this->num_products_imported++;
+						//Insert product post and post meta
+						$insert = Products_Model::factory()
+											->post_args(array('post_status'		=> 'publish',
+																'post_title'	=> $product->descriptionname,
+																'post_content'	=> $product->longdescription,
+																'post_excerpt'	=> $product->shortdescription
+																))
+											->meta(array('product_line'				=> $product->prodline,
+															'product_attributes'	=> ($product->prodline == 'soft') ? $product->product_attributes : null,
+															'product_attr_values'	=> ($product->prodline == 'soft') ? $product->product_attr_values : null,
+															'product_variants'		=> ($product->prodline == 'soft') ? $product->variants : null,
+															'colorswatch_images'	=> ($product->prodline == 'soft') ? $product->colorswatch_images : null,
+															'catentryid'			=> $product->catentryid,
+															'salesprice'			=> $product->salesprice,
+															'regularprice'			=> $product->regularprice,
+															'brandname'				=> $product->brandname,
+															'partnumber'			=> $partnumber,
+															'catalogid'				=> $product->catalogid,
+															'rating'				=> $product->rating,
+															'numreview'				=> $product->numreview,
+															'imageurls'				=> $product->imageurls,
+															'mainimageurl'			=> $product->mainimageurl
+															))
+											->save();
+
+						if($insert) {
+							
+							$this->num_products_imported++;
+							
+						} else {
+							
+							$this->num_products_fail_import++;
+							
+							$this->_set_error($partnumber . 'was NOT imported - post insert failed.');
+						}
 					
 				} else {
 					
