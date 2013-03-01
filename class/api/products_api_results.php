@@ -57,6 +57,7 @@ class Products_Api_Results {
 											'shortdescription',
 											'mainimageurl',
 											'saleprice',
+											'regularprice',
 											'brandname',
 											'partnumber',
 											'descriptionname',
@@ -102,7 +103,7 @@ class Products_Api_Results {
 					isset($this->_raw_response->mercadoresult->navgroups->navgroup)) ? true : false;
 		
 		if($this->api_data_type == 'detail') 
-			return ($this->_raw_response->productdetail->statusdata->responsecode === 0) ? true : false;
+			return ((int) $this->_raw_response->productdetail->statusdata->responsecode === 0) ? true : false;
 	}
 	
 	/**
