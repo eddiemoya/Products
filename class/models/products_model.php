@@ -41,6 +41,15 @@ class Products_Model {
 		return false;
 	}
 	
+	public function exists($meta_key, $value) {
+
+		global $wpdb;
+		
+		$q = "SELECT meta_id FROM {$wpdb->postmeta} WHERE meta_key = '{$meta_key}' AND meta_value = '{$value}'";
+		
+		return ($wpdb->get_results($q)) ? true : false;
+	}
+	
 	protected function _data($property, $name = null, $value = null) {
 		
 		//Getter

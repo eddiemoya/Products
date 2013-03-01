@@ -53,10 +53,16 @@
 <?php
 	if($products):
   		foreach($products as $product):
+  		
+  			$exists = Products_Model::factory()->exists('partnumber', $product->partnumber);
 ?>
       <tr id="row_<?php echo $product->partnumber; ?>">
         <td>
-          <input type="checkbox" name="import_single[]" class="checkbox" value="<?php echo $product->partnumber; ?>" />
+        	<?php if(! $exists):?>
+        		<input type="checkbox" name="import_single[]" class="checkbox" value="<?php echo $product->partnumber; ?>" />
+        	<?php else:?>
+        		Imported
+        	<?php endif;?>
         </td>
         <td class="image"><?php echo Plugin_Utils::image($product->imageurl); ?></td>
         <td class="name"><?php echo $product->name;?></td>

@@ -9,6 +9,8 @@ class Product_Importer {
 	public $msg = array();
 	
 	public $num_products_imported = 0;
+	
+	public $num_products_fail_import = 0;
 		
 	
 	public function __construct(array $partnumbers) {
@@ -34,38 +36,39 @@ class Product_Importer {
 				//Check that we got a valid response
 				if($product->success){
 					
+					$products_model = new Products_Model;
+					
 					//Check if product already exists in WP, if not proceed
-					//If it exists log in errors
+					if(! $products_model->exists('partnumber', $partnumber))
 					
-					//Insert product post, meta data, and taxonomy
-					
-					$this->num_products_imported++;
+						//Insert product post, meta data, and taxonomy
+						
+						$this->num_products_imported++;
 					
 				} else {
 					
-					$this->_set_error($partnumber . ' was not imported - not found.');
+					$this->num_products_fail_import++;
+					
+					$this->_set_error($partnumber . ' was NOT imported - not found in API.');
 				}
 				
+			}
+			
 				if(count($this->errors)) {
 					
-					$this->_set_msg('There were issues importing some of the products.');
+					$this->_set_msg('There were issues importing some of the products: ');
 					
 				} else {
 					
 					$this->_set_msg('All products were imported successfully. ' . $this->num_products_imported . ' products imported');
 				}
-			}
 			
 		} else {
 			
-			$this->_set_message('Please select at least one product to import.');
+			$this->_set_msg('Please select at least one product to import.');
 		}
 		
 		return $this;
-		
-	}
-	
-	protected function _insert_post() {
 		
 	}
 	
