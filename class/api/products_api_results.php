@@ -342,6 +342,14 @@ class Products_Api_Results {
 		$this->product_attr_values = $product_attr_values;
 	}
 	
+	protected function _sanitize_attr_values($vals) {
+	
+		if(is_array($vals)) {
+			
+		}
+		
+	}
+	
 	/**
 	 * _set_variants()
 	 * 
