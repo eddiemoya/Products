@@ -64,7 +64,9 @@ class Products_Api_Results {
 											'partnumber',
 											'descriptionname',
 											'catalogid',
-											'productvideourl');
+											'productvideourl',
+											'storeid',
+											'catalogid');
 	
 	
 	/**
@@ -234,8 +236,15 @@ class Products_Api_Results {
 		
 		$this->_set_detail_misc_attrs();
 		
+		$this->_set_product_uri();
+		
 		$this->_set_imageurls();
 	
+	}
+	
+	protected function _set_product_uri() {
+		
+		$this->product_uri = 'shc/s/p_' . $this->storeid . '_' . $this->catalogid . '_' . $this->partnumber;
 	}
 	
 	/**
