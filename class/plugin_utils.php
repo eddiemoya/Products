@@ -188,9 +188,22 @@ class Plugin_Utils {
 		}
 	}
 	
+	protected function _add_capabilities() {
+		
+		$role = get_role('administrator');
+		
+		$role->add_cap('delete_products');
+		$role->add_cap('edit_products');
+		$role->add_cap('edit_published_products');
+		$role->add_cap('edit_others_products');
+		$role->add_cap('publish_products');
+	}	
+	
 	public static function install() {
 			
 		update_option(SHC_PRODUCTS_PREFIX . 'settings', self::$_option_defaults);
+		
+		self::_add_capabilities();
 		
 		flush_rewrite_rules();
 	}

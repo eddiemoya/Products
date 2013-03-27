@@ -15,7 +15,7 @@ class Products_Admin_Import {
 	
 	public function submenu() {
 		
-        add_submenu_page( 'edit.php?post_type=' . SHC_PRODUCTS_POSTTYPE, __('Import Products'), __('Import Products'), 'edit_posts', 'import', array(&$this, 'index'));
+        add_submenu_page( 'edit.php?post_type=' . SHC_PRODUCTS_POSTTYPE, __('Import Products'), __('Import Products'), 'edit_products', 'import', array(&$this, 'index'));
     }
     
     public function index() {

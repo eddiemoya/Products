@@ -7,7 +7,7 @@ class Products_Updater {
 	 * @var array
 	 */
 	protected $_options_map = array('_log_root_dir_path'	=> 'updater_log_root',
-									'_email_recipient'		=> 'updater_email_recipient'
+									'_email_recipiesearsnt'		=> 'updater_email_recipient'
 									);
 									
 	protected $_email_recipient;
@@ -78,7 +78,7 @@ class Products_Updater {
 	 * 
 	 * @var array
 	 * @access protected
-	 * @since Wednesday, October 24 2012
+	 * @since Wednesday, October 24 2012numberposts'	=> -1
 	 */
 	protected $_old_logs = null;
 	
@@ -149,7 +149,11 @@ class Products_Updater {
 	 */
 	protected $_profile_mode = false;
 	
+	protected $_num_pages = 1;
 	
+	protected $_per_page = 1000;
+	
+
 	public function __construct($force = false) {
 		
 		if($force)
@@ -162,6 +166,9 @@ class Products_Updater {
 		//Get the options related to cron updater - email etc.
 		$this->_options_map();
 		$this->_log_dir_path = $this->_log_root_dir_path . $this->_log_dir;
+		
+		//Set number of pages of product posts
+		$this->_num_pages();
 	}
 	
 	public static function factory($force = false) {
@@ -183,62 +190,104 @@ class Products_Updater {
 	public function update() {
 		
 		if($this->is_api_available()) {
-			
-			//Get posts - array of objs
-			$posts = null; 
-			
-			//Set threshold
-			$this->_set_threshold($posts);
-			
-			foreach($posts as $post) {
 				
-				//If the number of 'deletes' equals threshold, fail job.
-	        	if((! $this->_force_update) && ($this->_num_deleted >= $this->_fail_threshold_cnt) && (! $this->_profile_mode)) {
-	        		
-	        		$this->fail_job("\n\n WARNING! -- Maximum number of deletes reached ({$this->_fail_threshold_cnt}). Job aborted.");
-	        		
-	        	}
-	        	
-	        	$this->_sync($post);
-	        	
+			for($page = 1; $page <= $this->_num_pages; $page++) {
+				
+				//Get posts - array of objs
+				$posts = get_posts(array('post_type'			=> SHC_PRODUCTS_POSTTYPE,
+											'post_status' 		=> array('publish', 'draft'),
+											'posts_per_page'	=> $this->_per_page,
+											'paged'				=> $page)); 
+				
+				
+				foreach($posts as $post) {
+					
+					//If the number of 'deletes' equals threshold, fail job.
+		        	if((! $this->_force_update) && ($this->_num_deleted >= $this->_fail_threshold_cnt) && (! $this->_profile_mode)) {
+		        		
+		        		$this->fail_job("\n\n WARNING! -- Maximum number of deletes reached ({$this->_fail_threshold_cnt}). Job aborted.");
+		        		
+		        	}
+		        	
+		        	//Publish & update data or set to draft
+		        	$this->_sync($post);
+				}
 			}
-		
+			
 		} else {
 			
 			//Fail Job
     		$this->fail_job('WARNING! -- API Server was NOT available. Job aborted.');
-    		
-    		$this->create_log();
-    		
-    		$this->rotate_logs();
-    		
-    		$this->mail_report();
 			
 		}
+		
+		
+		/*$this->create_log();
+    		
+    	$this->rotate_logs();*/
+    		
+    	$this->mail_report();
 		
 	}
 	
 	protected function _sync($post) {
 		
+		//Add post meta
+		$post = $this->_add_post_meta($post);
 		
-		//Check to see if we find this product in API
-		$success = Products_Api_Request::factory(array('api' => 'detail',
+		
+		//Get product details from API
+		$product = Products_Api_Request::factory(array('api' => 'detail',
 										 				'term' => $post->partnumber)) 
-		        						->response()
-		        						->success;
+		        						->response();
+
 		        						
-		 if($success) {
+		 if($product->success) {
 		 	
-		 	//Get meta data and taxonomy info and update
+		 	//Update product, set to publish
+		 	Products_Model::factory()->post_args(array('ID'				=> $post->ID,
+		 												'post_status'	=> 'publish',
+														'post_title'	=> $product->descriptionname,
+														'post_content'	=> $product->longdescription,
+														'post_excerpt'	=> $product->shortdescription
+														))
+									->meta(array('product_line'			=> $product->prodline,
+												'product_attributes'	=> ($product->prodline == 'soft') ? $product->product_attributes : null,
+												'product_attr_values'	=> ($product->prodline == 'soft') ? $product->product_attr_values : null,
+												'product_variants'		=> ($product->prodline == 'soft') ? $product->variants : null,
+												'colorswatch_images'	=> ($product->prodline == 'soft') ? $product->colorswatch_images : null,
+												'catentryid'			=> $product->catentryid,
+												'saleprice'				=> $product->saleprice,
+												'regularprice'			=> $product->regularprice,
+												'brandname'				=> $product->brandname,
+												'partnumber'			=> $post->partnumber,
+												'catalogid'				=> $product->catalogid,
+												'rating'				=> $product->rating,
+												'numreview'				=> $product->numreview,
+												'imageurls'				=> $product->imageurls,
+												'mainimageurl'			=> $product->mainimageurl
+												))
+									->update();
 		 	
 		 	$this->log_update($post);
 		 	
 		 } else {
 		 	
 		 	//set this product to draft
+		 	Products_Model::factory()->post_args(array('ID'				=> $post->ID,
+		 												'post_status' 	=> 'draft'))
+ 									 ->update();
 		 	
 		 	$this->log_delete($post);
 		 }
+	}
+	
+	protected function _add_post_meta($post) {
+		
+		$meta_data = get_post_meta($post->ID, 'partnumber', true);
+		$post->partnumber = $meta_data;
+		
+		return $post;
 	}
 	
   /**
@@ -449,10 +498,11 @@ class Products_Updater {
      */
     protected function is_api_available() { 
     	
-    	return Products_Api_Request::factory(array('api' => 'detail',
-											 		'term' => '002VA50405301P'))
+    	return (Products_Api_Request::factory(array('api' => 'detail',
+											 		'term' => 'something'))
     								->response()
-    								->success;
+    								->responsecode !== null) ? true : false;
+    								
     }
     
     /**
@@ -475,14 +525,26 @@ class Products_Updater {
     	
     	if(! $this->_force_update){
     		
-    		$this->_num_posts = count($posts);
     		$this->_fail_threshold_cnt = round($this->_num_posts * $this->_fail_threshold_pct);
     	}
     	
     }
-	
-	
-	
-	
-	
+    
+    protected function _num_pages() {
+    	
+    	$num_posts = (wp_count_posts(SHC_PRODUCTS_POSTTYPE)->publish + wp_count_posts(SHC_PRODUCTS_POSTTYPE)->draft);
+    	
+    	$this->_num_pages = ceil($num_posts / $this->_per_page);
+    	
+    	$this->_num_posts = $num_posts;
+		$this->_set_threshold();
+    }
+    
+    protected function _per_page($num) {
+    	
+    	$this->_per_page = $num;
+    	
+    	return $this;
+    }
+    
 }

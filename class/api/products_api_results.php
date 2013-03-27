@@ -92,6 +92,12 @@ class Products_Api_Results {
 		
 		$this->page = $obj->page();
 		
+		if($this->api_data_type == 'detail')
+			$this->responsecode = $this->_raw_response
+    									->productdetail
+    									->statusdata
+    									->responsecode;
+		
 		if($this->success)
 			$this->_set_properties();
 		

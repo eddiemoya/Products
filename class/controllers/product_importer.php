@@ -43,18 +43,18 @@ class Product_Importer {
 					
 						//Insert product post and post meta
 						$insert = Products_Model::factory()
-											->post_args(array('post_status'		=> 'publish',
+												->post_args(array('post_status'		=> 'publish',
 																'post_title'	=> $product->descriptionname,
 																'post_content'	=> $product->longdescription,
 																'post_excerpt'	=> $product->shortdescription
 																))
-											->meta(array('product_line'				=> $product->prodline,
+												->meta(array('product_line'				=> $product->prodline,
 															'product_attributes'	=> ($product->prodline == 'soft') ? $product->product_attributes : null,
 															'product_attr_values'	=> ($product->prodline == 'soft') ? $product->product_attr_values : null,
 															'product_variants'		=> ($product->prodline == 'soft') ? $product->variants : null,
 															'colorswatch_images'	=> ($product->prodline == 'soft') ? $product->colorswatch_images : null,
 															'catentryid'			=> $product->catentryid,
-															'salesprice'			=> $product->salesprice,
+															'saleprice'				=> $product->saleprice,
 															'regularprice'			=> $product->regularprice,
 															'brandname'				=> $product->brandname,
 															'partnumber'			=> $partnumber,
@@ -64,7 +64,7 @@ class Product_Importer {
 															'imageurls'				=> $product->imageurls,
 															'mainimageurl'			=> $product->mainimageurl
 															))
-											->save();
+												->save();
 
 						if($insert) {
 							

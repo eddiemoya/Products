@@ -30,7 +30,22 @@ class Products_Model {
 		
 		if(! is_wp_error($id = wp_insert_post($this->_post_args, true))) {
 			
-			foreach($this->_meta as $key=>$value) {
+			foreach((array)$this->_meta as $key=>$value) {
+				
+				update_post_meta($id, $key, $value);
+			}
+			
+			return true;
+		}
+			
+		return false;
+	}
+	
+	public function update() {
+		
+		if(! is_wp_error($id = wp_update_post($this->_post_args, true))) {
+			
+			foreach((array)$this->_meta as $key=>$value) {
 				
 				update_post_meta($id, $key, $value);
 			}

@@ -27,10 +27,12 @@ class Product_Post_Type {
     						'show_in_menu' 			=> true, 
     						'query_var' 			=> true,
     						'rewrite' 				=> array( 'slug' => 'product' ),
-    						'capability_type' 		=> 'post',
+							'map_meta_cap'			=> true,
+    						'capability_type' 		=> array('product', 'products'),
     						'has_archive' 			=> true, 
     						'hierarchical' 			=> true,
 							'exclude_from_search'	=> true,
+							'taxonomies'			=> array('category', 'post_tag', 'skcategory'),
     						'menu_position' 		=> null,
 							'can_export'			=> true,
     						'supports' 				=> array( 'title', 'editor', 'thumbnail', 'page-attributes'));

@@ -11,10 +11,10 @@ class Product_Assets {
 	
 	 
 	
-	protected $_admin_scripts = array(/*'jquery-tools' 	=> array('file'		=> 'jquery.tools.min.js',
+	protected $_admin_scripts = array('jquery-tools' 	=> array('file'		=> 'jquery.tools.min.js',
 																'dep'		=> array(),			
 																'ver'		=> '1.0',
-																'page'		=> null),*/
+																'page'		=> null),
 										'products_admin' => array('file'	=> 'admin.js',
 																'dep'		=>	array('jquery-tools'),
 																'ver'		=> '1.0',
