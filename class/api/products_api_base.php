@@ -81,7 +81,7 @@ class Products_Api_Base {
 	public function __construct() {
 		
 		//get plugin options
-		$options = Plugin_Utils::options();
+		$options = Product_Utils::options();
 		
 		$this->api_version = 'v2';
 		$this->api_key = (isset($options['api_key'])) ? $options['api_key'] : '06749c96f1e1bfadfeca4a02b4120253';

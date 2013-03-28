@@ -20,7 +20,7 @@ class Products_Admin_Import {
     
     public function index() {
     	
-    	Plugin_Utils::view('admin/import/index');
+    	Product_Utils::view('admin/import/index');
     }
     
     public function product_list() {
@@ -46,7 +46,7 @@ class Products_Admin_Import {
         				'start_index'		=> ($current_page != 1 && ($current_page - 3) >= 1) ? $current_page - 3 : 1,
         				'end_index'			=> (($current_page + 3) <= $results->num_pages) ? $current_page + 3 : $results->num_pages);
         
-        $view = Plugin_Utils::view('admin/import/list', $args, true);
+        $view = Product_Utils::view('admin/import/list', $args, true);
         
         echo $view;
         exit;
@@ -81,7 +81,7 @@ class Products_Admin_Import {
 	    		 			'errors'			=> (count($import->errors)) ? $import->errors : null,
 	    		 			'message'			=> $import->msg);
     		
-    		 $view = Plugin_Utils::view('admin/import/list', $args, true);
+    		 $view = Product_Utils::view('admin/import/list', $args, true);
     		 
     		 echo $view;
     		 exit;

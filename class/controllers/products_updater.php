@@ -7,7 +7,7 @@ class Products_Updater {
 	 * @var array
 	 */
 	protected $_options_map = array('_log_root_dir_path'	=> 'updater_log_root',
-									'_email_recipiesearsnt'		=> 'updater_email_recipient'
+									'_email_recipient'		=> 'updater_email_recipient'
 									);
 									
 	protected $_email_recipient;
@@ -78,7 +78,7 @@ class Products_Updater {
 	 * 
 	 * @var array
 	 * @access protected
-	 * @since Wednesday, October 24 2012numberposts'	=> -1
+	 * @since Wednesday, October 24 2012
 	 */
 	protected $_old_logs = null;
 	
@@ -183,7 +183,7 @@ class Products_Updater {
 			
 			if(property_exists(__CLASS__, $prop))
 			
-				$this->{$prop} = Plugin_Utils::options($option);
+				$this->{$prop} = Product_Utils::options($option);
 		}
 	}
 	
@@ -392,7 +392,7 @@ class Products_Updater {
      */
     protected function mail_report() {
     	
-    	$to = 'phpteam@searshc.com';
+    	$to = $this->_email_recipient;
     	$subject = 'SHC Products Update for ' . $this->_blog_name;
     	$body = ($this->_activity_log) ? "Product updates for " . $this->_blog_name . ": \n Cron job completed on: " . date('m-d-Y H:i:s a') . " \n Total Products: {$this->_num_posts} \n Products Updated: {$this->_num_updated} \n Products Set to Draft: {$this->_num_deleted} \n Status: ". $this->_status ."\n\n" .  $this->log_to_string($this->_activity_log) : 'No products were updated or set to draft.';
     	

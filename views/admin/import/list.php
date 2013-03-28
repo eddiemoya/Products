@@ -66,7 +66,7 @@
         		Imported
         	<?php endif;?>
         </td>
-        <td class="image"><?php echo Plugin_Utils::image($product->imageurl); ?></td>
+        <td class="image"><?php echo Product_Utils::image($product->imageurl); ?></td>
         <td class="name"><?php echo $product->name;?></td>
         <td class="partnumber"><?php echo $product->partnumber;?></td>
         <td class="cutprice"><?php echo $product->cutprice;?></td>

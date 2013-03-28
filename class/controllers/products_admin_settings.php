@@ -13,7 +13,7 @@ class Products_Admin_Settings {
 		
 		$this->prefix = SHC_PRODUCTS_PREFIX;
 		$this->settings_field = SHC_PRODUCTS_PREFIX . "settings";
-		$this->options = Plugin_Utils::options();
+		$this->options = Product_Utils::options();
 		
 		add_action('admin_menu', array(&$this, 'menu'));
         add_action('admin_init', array(&$this, 'register_settings'));
@@ -53,7 +53,7 @@ class Products_Admin_Settings {
 	
 	public function api_key() {
 		
-		Plugin_Utils::view('form/input_text', array('name' => $this->settings_field . '[api_key]',
+		Product_Utils::view('form/input_text', array('name' => $this->settings_field . '[api_key]',
 													'id' => SHC_PRODUCTS_PREFIX . 'api-key',
 													'value' => $this->options['api_key']));
 		
@@ -61,7 +61,7 @@ class Products_Admin_Settings {
 	
 	public function store() {
 		
-		Plugin_Utils::view('form/input_radio', array('name' => $this->settings_field . '[store]',
+		Product_Utils::view('form/input_radio', array('name' => $this->settings_field . '[store]',
 													'id' => SHC_PRODUCTS_PREFIX . 'store',
 													'options' => array('Kmart' 		=> 'Kmart',
 																		'Sears' 	=> 'Sears',
@@ -71,21 +71,21 @@ class Products_Admin_Settings {
 	
 	public function updater_log_root() {
 		
-		Plugin_Utils::view('form/input_text', array('name' => $this->settings_field . '[updater_log_root]',
+		Product_Utils::view('form/input_text', array('name' => $this->settings_field . '[updater_log_root]',
 													'id' => SHC_PRODUCTS_PREFIX . 'updater-log-root',
 													'value' => $this->options['updater_log_root']));
 	}
 	
 	public function updater_email_recipient() {
 		
-		Plugin_Utils::view('form/input_text', array('name' => $this->settings_field . '[updater_email_recipient]',
+		Product_Utils::view('form/input_text', array('name' => $this->settings_field . '[updater_email_recipient]',
 													'id' => SHC_PRODUCTS_PREFIX . 'updater-email-recipient',
 													'value' => $this->options['updater_email_recipient']));
 	}
 	
 	public function settings_page() {
 		
-		Plugin_Utils::view('admin/settings', array('settings_field' => $this->settings_field,
+		Product_Utils::view('admin/settings', array('settings_field' => $this->settings_field,
 													'settings_section' => 'skproducts-settings'));
 	}
 }

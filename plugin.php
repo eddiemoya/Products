@@ -19,18 +19,18 @@ Author: Eddie "the Moyan" Moya & Dan Crimmins
  
  
  //Include Product_Utils class - contains class autoloader
- require_once(SHC_PRODUCTS_CLASS . 'plugin_utils.php');
+ require_once(SHC_PRODUCTS_CLASS . 'product_utils.php');
  require_once(SHC_PRODUCTS_FUNCTION . 'functions.php');
  
  
  //Register autoload function
- spl_autoload_register(array('Plugin_Utils', 'autoload'));
+ spl_autoload_register(array('Product_Utils', 'autoload'));
  
  //Install / Uninstall
- register_activation_hook(__FILE__, array('Plugin_Utils', 'install'));
- register_deactivation_hook(__FILE__, array('Plugin_Utils', 'uninstall'));
+ register_activation_hook(__FILE__, array('Product_Utils', 'install'));
+ register_deactivation_hook(__FILE__, array('Product_Utils', 'uninstall'));
     
  
  //Initialize classes with hooks
- Plugin_Utils::init();
+ Product_Utils::init();
  
