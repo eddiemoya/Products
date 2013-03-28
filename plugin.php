@@ -3,7 +3,7 @@
 Plugin Name: Sears/Kmart Products Plugin
 Description: Provides functionality to import product data from Sears Product API and use products within WP.
 Version: 1.0
-Author: Eddie "the Moyan" Moya & Dan Crimmins
+Author: Dan Crimmins
 */
 
  //Define plugin root, class, and function paths
