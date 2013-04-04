@@ -22,7 +22,7 @@
 <?php if($prev_page):?>
 	 <a class="product_prev_page_link" href="#"  data-page-number="<?php echo $prev_page;?>">&lt;&lt; Previous</a>
 <?php endif;?>
-<?php for($i = $start_index; $i <= $end_index; $i++): ?>
+<?php for($i = $start_index; ($i <= $end_index && $i <= $num_pages); $i++): ?>
   <?php if($i == $current_page): ?>
       <span class='current_page'><?php echo $i;?></span>
     <?php else: ?>
