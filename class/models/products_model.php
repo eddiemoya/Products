@@ -169,7 +169,7 @@ class Products_Model {
 			
 			foreach($this->products as $key=>$product) {
 				
-				$meta = $this->_convert_meta(get_post_meta($product->ID));
+				$meta = $this->_convert_meta(get_post_meta($product->ID, ''));
 				
 				$this->products[$key]->meta = $meta;
 				

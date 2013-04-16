@@ -69,7 +69,7 @@ class Products_Api_Base {
 	 * Array for holding overloaded properties.
 	 * @var array
 	 */
-	protected $_data = array();
+	public $_data = array();
 	 
 	protected $_curl_options = array(
 							        CURLOPT_RETURNTRANSFER  => 1,
@@ -121,12 +121,12 @@ class Products_Api_Base {
 		return $this;
 	}
 	
-	protected function __set($name, $value) {
+	public function __set($name, $value) {
 		
 		$this->_data[$name] = $value;
 	}
 	
-	protected function __get($name) {
+	public function __get($name) {
 		
 	 if (array_key_exists($name, $this->_data)) {
 	 	
@@ -136,7 +136,7 @@ class Products_Api_Base {
       return null;
 	}
 	
-	protected function __isset($name) {
+	public function __isset($name) {
 		
 		return isset($this->_data[$name]);
 	}

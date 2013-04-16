@@ -62,7 +62,8 @@ class Product_Importer {
 															'rating'				=> $product->rating,
 															'numreview'				=> $product->numreview,
 															'imageurls'				=> $product->imageurls,
-															'mainimageurl'			=> $product->mainimageurl
+															'mainimageurl'			=> $product->mainimageurl,
+															'product_uri'			=> $product->product_uri
 															))
 												->save();
 
