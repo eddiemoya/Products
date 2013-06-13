@@ -27,7 +27,7 @@ class Products_Admin_Settings {
 	
 	public function register_settings() {
 		
-		register_setting($this->settings_field, $this->settings_field);
+		register_setting($this->settings_field, $this->settings_field, array($this, 'settings_save'));
 		
 		//API settings
 		add_settings_section(SHC_PRODUCTS_PREFIX . 'api_section', __('Products API Settings'), array(&$this, 'api_section'), 'skproducts-settings');
@@ -38,7 +38,7 @@ class Products_Admin_Settings {
 		add_settings_section(SHC_PRODUCTS_PREFIX . 'updater_section', __('Products Updater Settings'), array(&$this, 'updater_section'), 'skproducts-settings');
 		add_settings_field('updater_log_root', __('Log directory root path'), array(&$this, 'updater_log_root'), 'skproducts-settings', SHC_PRODUCTS_PREFIX . 'updater_section');
 		add_settings_field('updater_email_recipient', __('E-mail recipient'), array(&$this, 'updater_email_recipient'), 'skproducts-settings', SHC_PRODUCTS_PREFIX . 'updater_section');
-		
+		add_settings_field('force_update', __('Force Product Update'), array(&$this, 'force_update'), 'skproducts-settings', SHC_PRODUCTS_PREFIX . 'updater_section');
 	}
 	
 	public function api_section() {
@@ -81,6 +81,25 @@ class Products_Admin_Settings {
 		Product_Utils::view('form/input_text', array('name' => $this->settings_field . '[updater_email_recipient]',
 													'id' => SHC_PRODUCTS_PREFIX . 'updater-email-recipient',
 													'value' => $this->options['updater_email_recipient']));
+	}
+	
+	public function force_update() {
+		
+		Product_Utils::view('form/input_radio', array('name' => $this->settings_field . '[force_update]',
+														'id' => SHC_PRODUCTS_PREFIX . 'force_update',
+														'options' => array('Yes' => 'yes',
+																			'No' => 'no'),
+														'checked' => $this->options['force_update']));
+	}
+	
+	public function settings_save($settings) {
+		
+		if($settings['force_update'] == 'yes') {
+			
+			Products_Updater::factory(true)->update();
+		}
+		
+		return $settings;
 	}
 	
 	public function settings_page() {

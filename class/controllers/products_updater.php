@@ -222,9 +222,9 @@ class Products_Updater {
 		}
 		
 		
-		/*$this->create_log();
+		$this->create_log();
     		
-    	$this->rotate_logs();*/
+    	$this->rotate_logs();
     		
     	$this->mail_report();
 		

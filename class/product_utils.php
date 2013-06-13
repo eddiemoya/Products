@@ -15,7 +15,8 @@ class Product_Utils {
 	public static $_option_defaults = array('api_key'					=> '06749c96f1e1bfadfeca4a02b4120253',
 											'store'						=> 'Sears',
 											'updater_log_root'			=> '/appl/wordpress/log/',
-											'updater_email_recipient'	=> 'phpteam@searshc.com');
+											'updater_email_recipient'	=> 'phpteam@searshc.com',
+											'force_update'				=> 'no');
 	
 	/** 
 	 * $_classes - Array of classes to load on init 
