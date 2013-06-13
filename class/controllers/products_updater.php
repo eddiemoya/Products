@@ -522,7 +522,7 @@ class Products_Updater {
     	
     }
 	
-	protected function _set_threshold($posts) {
+	protected function _set_threshold() {
     	
     	if(! $this->_force_update){
     		

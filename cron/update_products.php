@@ -8,7 +8,7 @@ ini_set('memory_limit', '256M');
  * executes the update.
  */
 
-$wp_folder_root = (isset($_SERVER['WP_ROOT'])) ? $_SERVER['WP_ROOT'] : '';
+$wp_folder_root = substr(__FILE__, 0, (stripos(__FILE__, 'wp-content/')));
 
 if ( ! is_dir($wp_folder_root))
 {
