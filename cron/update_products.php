@@ -8,6 +8,15 @@ ini_set('memory_limit', '256M');
  * executes the update.
  */
 
+//Check that arg for http host is passed
+if(! $argv[1]) {
+	
+	throw new Exception('You must provide the argument for HTTP_HOST');
+	exit;
+}
+
+$_SERVER['HTTP_HOST'] = $argv[1];
+
 $wp_folder_root = substr(__FILE__, 0, (stripos(__FILE__, 'wp-content/')));
 
 if ( ! is_dir($wp_folder_root))
