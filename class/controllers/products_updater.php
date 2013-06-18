@@ -395,7 +395,7 @@ class Products_Updater {
     	
     	$to = $this->_email_recipient;
     	$subject = 'SHC Products Update for ' . $this->_blog_name;
-    	$body = ($this->_activity_log) ? "Product updates for " . $this->_blog_name . ": \n Cron job completed on: " . date('m-d-Y H:i:s a') . " \n Total Products: {$this->_num_posts} \n Products Updated: {$this->_num_updated} \n Products Set to Draft: {$this->_num_deleted} \n Status: ". $this->_status ."\n\n" .  $this->log_to_string($this->_activity_log) : 'No products were updated or set to draft.';
+    	$body = ($this->_activity_log) ? "Product updates for " . $this->_blog_name . ": \n Cron job completed on: " . date('m-d-Y h:i:s a') . " \n Total Products: {$this->_num_posts} \n Products Updated: {$this->_num_updated} \n Products Set to Draft: {$this->_num_deleted} \n Status: ". $this->_status ."\n\n" .  $this->log_to_string($this->_activity_log) : 'No products were updated or set to draft.';
     	
     	if($this->_profile_mode) {
     		
